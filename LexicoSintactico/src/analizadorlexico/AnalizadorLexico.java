@@ -15,7 +15,7 @@ public class AnalizadorLexico {
     simbolos = new ListaEnlazada();
     // Llenar la lista de palabras reservadas:
     listaPalabrasReservadas[0][0] = "Palabra reservada";
-    listaPalabrasReservadas[1][0] = "program";
+    listaPalabrasReservadas[1][0] = "programa";
     listaPalabrasReservadas[2][0] = "begin";
     listaPalabrasReservadas[3][0] = "end";
     

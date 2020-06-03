@@ -6,64 +6,60 @@ package estructurasDeDatos;
  * @author Miguel
  */
 public class Pila{
-    Nodo ultimo;
-    Nodo inicial;
-    boolean vacia; 
-   
+    private Nodo tope, fondo;
+    
     public Pila(){
-        inicial = ultimo = null;
-    }
-
-    public String pop(){        
-        String x;
-        x = (String) ultimo.getInfo();
-        if(!esVacia()){
-            if(inicial==ultimo){
-                inicial=ultimo=null;
-            }else{
-                Nodo auxNodo = inicial; 
-                    while (auxNodo.getSiguiente()!=ultimo)
-                        auxNodo = auxNodo.getSiguiente();                    
-                    
-                ultimo = auxNodo;
-                ultimo.setSiguiente(null);
-            }
-        }else{
-            System.out.println("Sin datos");
-        }  
-        return x;
+      tope = fondo = null;
     }
     
-    void push(String dato){
-        if(!esVacia()){
-            ultimo.setSiguiente(new Nodo(dato));
-            ultimo = ultimo.getSiguiente();
-        }else{            
-            inicial = ultimo = new Nodo(dato);
-        }
-    }
-
-    void cicloPush(String [] datos){            
-        for (int i =0; i < datos.length; i++) {
-            if(datos[i]!=null && datos[i]!=" ")
-                push(datos[i]);
-        }
-    }
-        
-    void mostrarPila(){
-        Nodo aux = inicial;
-        
-        while(aux != null){
-            System.out.print("["+aux.getInfo()+"] ");
-            aux = aux.getSiguiente();    
-        }
-        
+    public void push(Nodo n){
+      Nodo temp;
+      
+      if(!esVacia()){
+        temp = tope;
+        tope = n;
+        tope.setSiguiente(temp);
+      } else {
+        tope = fondo = n;
+      }
     }
     
-    boolean esVacia(){
-        if(inicial == null) vacia = true;
-        else vacia = false;
-        
-        return vacia;
+    public void pop(){
+      Nodo temp;
+      
+      if(!esVacia()){
+        if(tope == fondo){
+          tope = null;
+          fondo = null;
+        } else {
+          temp = tope;
+          tope = temp.getSiguiente();
+          temp.setSiguiente(null);
+        }
+      }
+    }
+    
+    public void cicloPush(String[] a){
+      for(String info : a)
+        push(new Nodo(info));
+    }
+    
+    public void mostrarPila(){
+      if(!esVacia()){
+        if(tope == fondo){
+          System.out.println("[" + tope.getInfo() + "]");
+        } else {
+        for(Nodo temp = tope; temp != fondo; temp = temp.getSiguiente())
+          System.out.print("[" + temp.getInfo() + "]");
+        }
+      }
+    }
+    
+    public boolean esVacia(){
+      return tope == null && fondo == null;
+    }
+    
+    public Nodo getTope(){
+      return tope;
     }
 }

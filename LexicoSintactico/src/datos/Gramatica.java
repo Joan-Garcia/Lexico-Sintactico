@@ -8,8 +8,8 @@ public class Gramatica {
   private String[] gramatica, ladoDerecho, noTerminales, terminales;
   private Archivo archivo;
   
-  public Gramatica(){
-    archivo = new Archivo();
+  public Gramatica(Archivo archivo){
+    this.archivo = archivo;
   }
   
   /**

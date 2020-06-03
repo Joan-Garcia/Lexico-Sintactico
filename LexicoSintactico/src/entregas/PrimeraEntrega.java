@@ -1,12 +1,17 @@
 package entregas;
 
+import datos.Archivo;
 import datos.Gramatica;
 
 public class PrimeraEntrega {
   private final Gramatica gramatica;
+  private final Archivo archivo;
   
   public PrimeraEntrega(){
-    gramatica = new Gramatica();
+    archivo = new Archivo();
+    System.out.println("Selecciona archivo de gramática");
+    
+    gramatica = new Gramatica(archivo);
   }
   
   public void procesaEImprime(){
