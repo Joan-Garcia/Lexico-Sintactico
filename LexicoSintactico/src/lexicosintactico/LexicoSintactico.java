@@ -91,7 +91,7 @@ public class LexicoSintactico {
         }
       }
     }catch (EOFException e){
-      System.out.println("\n>>>¡Se ha terminado de analizar el programa, no se encontaron errores!");
+      System.out.println("\n>>>¡Se ha terminado de analizar el programa, no se encontraron errores!");
     }
   }
   
