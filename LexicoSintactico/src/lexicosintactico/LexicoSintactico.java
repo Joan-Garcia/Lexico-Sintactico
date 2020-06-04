@@ -1,7 +1,6 @@
 package lexicosintactico;
 
 import analizadorlexico.AnalizadorLexico;
-import datos.Archivo;
 import datos.Gramatica;
 import estructurasDeDatos.Nodo;
 import estructurasDeDatos.Pila;
