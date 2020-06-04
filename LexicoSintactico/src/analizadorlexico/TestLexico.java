@@ -7,7 +7,7 @@ import java.io.EOFException;
 /*
   Prueba del analizador léxico token por token
 */
-public class Main {
+public class TestLexico {
   public static void main(String[] args) {
     Archivo archivo;
     AnalizadorLexico lexico;
