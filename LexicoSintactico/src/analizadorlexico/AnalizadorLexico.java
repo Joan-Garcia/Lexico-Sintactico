@@ -50,10 +50,6 @@ public class AnalizadorLexico {
         } else if(error){
           palabra += programa.charAt(inicio);
           if(esEspacio(programa.charAt(inicio + 1))){
-//            System.out.println("Error en: " + palabra);
-//            errores.add(new Nodo(palabra));
-//            palabra = "";
-//            error = false;
             inicio++;
             return null;
           }
@@ -89,9 +85,6 @@ public class AnalizadorLexico {
              esMinuscula(programa.charAt(inicio + 1))||
              esMayuscula(programa.charAt(inicio + 1))  
              ){
-//            System.out.println("Error en: " + palabra);
-//            errores.add(new Nodo(palabra));
-//            palabra = "";
             inicio++;
             return null;
           }
@@ -110,12 +103,6 @@ public class AnalizadorLexico {
             inicio++;
             return palabra;
           } else {
-//            System.out.println("Error en: " + palabra);
-//            errores.add(new Nodo(palabra));
-//            palabra = "";
-//            inicio++;
-//            estado = 0;
-//            inicio++;
             return null;
           }
         }
@@ -129,7 +116,6 @@ public class AnalizadorLexico {
             return palabra;
           } else {
             inicio++;
-            System.out.println("/////////////////return palabra simbolo");
             return palabra;
           }
         } else {
@@ -167,13 +153,10 @@ public class AnalizadorLexico {
           //  Añade a la tabla de símbolos.
           if(!simboloRegistrado(palabra))                                       //Si no está registrado el identificador.
             añadeFilaASimbolos(palabra, "Identificador");                         //Regístralo.
-          
-//          inicio++; // ******* //
           return "id";
         }
       case 5:
         if(esNumero(programa.charAt(inicio))){              // NÚMERO ENTERO
-          System.out.println("ES NUMERO------------");
           palabra += programa.charAt(inicio);             //Guardamos el número
           inicio++;
           estado = 5;
@@ -181,11 +164,9 @@ public class AnalizadorLexico {
         } else if (esPunto(programa.charAt(inicio))){  // sigue un punto.
           palabra += programa.charAt(inicio);          //Guardamos el punto
           if (!esNumero(programa.charAt(inicio + 1))){
-            System.out.println("//////////////sigue punto y no hay numero despues");
             inicio++;
             return null;
           } else {
-            System.out.println("/////////////////sigue punto y hay numero despues");
             inicio++;
             estado = 6;                                     //Es flotante
             break;
@@ -194,7 +175,6 @@ public class AnalizadorLexico {
           if(esMayuscula(programa.charAt(inicio)) || 
                   esSimbolo(programa.charAt(inicio)) ||
                   esMinuscula(programa.charAt(inicio))){
-            System.out.println("///////////termina numero entero, error");
             estado = 0;
             error = true;
             break;
@@ -208,8 +188,7 @@ public class AnalizadorLexico {
           estado = 6;
           break;
         } else {                                      //Termina el número float
-          System.out.println("///////////////////////return palabra de numero float");
-          return palabra;
+          return "realliteral";
         }
     }
     throw new EOFException();
@@ -260,18 +239,6 @@ public class AnalizadorLexico {
   
   private boolean esNumero(char c){
     return Character.isDigit(c);
-  }
-  
-  private int valorASCII(char c){
-    return (int) c;
-  }
-  
-  // Devuelve el token correspondiente a la palabra reservada.
-  private int tokenPalabraReservada(String palabra){
-    for (int i = 0; i <= 3; i++)
-      if(palabra.equals(listaPalabrasReservadas[i][0]))
-        return Integer.parseInt(listaPalabrasReservadas[i][1]);
-    return -1;
   }
   
   // Comprueba si una palabra forma parte de las palabras reservadas.

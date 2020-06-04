@@ -28,7 +28,7 @@ public class LexicoSintactico {
     this.pila = pila;
   }
   
-  public void LlDriver(){
+  public void LlDriver() throws Exception{
     String x, a;
     
     try{
@@ -52,14 +52,12 @@ public class LexicoSintactico {
       System.out.println("¿Está vacía la pila? " + pila.esVacia());
       while(!pila.esVacia()){
         System.out.println("\tx: " + x);
-        System.out.println("\t¿x es noterminal? " + this.Contains(x, gramatica.getNoTerminales()));
-        if(this.Contains(x, gramatica.getNoTerminales())){
-          System.out.println("\t\tSí");
-          System.out.println("\t\t¿Predictiva de x: "+x+", a: "+a+" = "+ Predict(a,x) +" es diferente de 0?");
-          if(Predict(a,x) != 0){
-            System.out.println("\t\t\t\tSí");
-            System.out.println("\t\t\t\tx será el lado derecho de la producción " + Predict(a,x));
-            x = gramatica.getLadoDerecho()[Predict(a,x) - 1];
+        System.out.println("\t¿x es noterminal? " + contains(x, gramatica.getNoTerminales()));
+        if(contains(x, gramatica.getNoTerminales())){
+          System.out.println("\t\t¿Predictiva de x: "+x+", a: "+a+" = "+ predict(a,x) +" es diferente de 0?");
+          if(predict(a,x) != 0){
+            System.out.println("\t\t\t\tx será el lado derecho de la producción " + predict(a,x));
+            x = gramatica.getLadoDerecho()[predict(a,x) - 1];
             System.out.println("\t\t\t\tx: " + x);
             System.out.println("\t\t\t\tPop a la pila");
             pila.pop();
@@ -71,42 +69,40 @@ public class LexicoSintactico {
             x = (String) pila.getTope().getInfo();
             
           } else {
-            System.out.println("\t\t\t\tNo");
-            System.out.println("Error");
-            break;
+            System.out.println(">>>Error, no se esperaba a: " + a);
+            throw new Exception();
+//            break;
           }
         } else {
-          System.out.println("\t\tNo");
           System.out.println("\t\t¿Es x: "+x+" igual a a: "+a+" ?");
           if(x.equals(a)){
-            System.out.println("\t\t\tSí");
             System.out.println("\t\t\tPop a la pila");
             pila.pop();
             System.out.print("\t\t\tPila: ");
             pila.mostrarPila();
             a = analizadorLexico.getToken();
-            x = (String) pila.getTope().getInfo();//-----------------------------------
+            x = (String) pila.getTope().getInfo();
             System.out.println("\t\t\ta: " + a + "\tSiguiente token del programa");
           } else {
-            System.out.println("\t\t\tNo");
-            System.out.println("Error");
-            break;
+            System.out.println(">>>Error, se esperaba: " + x);
+            throw new Exception();
+//            break;
           }
         }
       }
     }catch (EOFException e){
-      System.out.println("Se a terminado el análisis de manera correcta");
+      System.out.println("\n¡Se ha terminado de analizar el programa, no se encontaron errores!");
     }
   }
   
-  private boolean Contains(String a, String[] r){
+  private boolean contains(String a, String[] r){
     for (String c : r)
       if(c.equals(a))
         return true;
     return false;
   }
   
-  private int Predict(String terminal, String noTerminal){
+  private int predict(String terminal, String noTerminal){
     int fila, columna;
     
     fila = indexNoTerminal(noTerminal);
