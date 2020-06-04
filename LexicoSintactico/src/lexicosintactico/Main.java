@@ -5,7 +5,6 @@ import datos.Archivo;
 import datos.Gramatica;
 import estructurasDeDatos.ListaEnlazada;
 import estructurasDeDatos.Pila;
-import java.util.Arrays;
 
 public class Main {
   Gramatica gramatica;

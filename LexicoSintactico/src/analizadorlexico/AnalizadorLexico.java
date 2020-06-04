@@ -172,9 +172,11 @@ public class AnalizadorLexico {
             break;
           }
         } else {                                       //Termina el número entero
-          if(esMayuscula(programa.charAt(inicio)) || 
-                  esSimbolo(programa.charAt(inicio)) ||
-                  esMinuscula(programa.charAt(inicio))){
+          if(esEspacio(programa.charAt(inicio))){
+            return "intliteral";
+          }else if(esMayuscula(programa.charAt(inicio)) || 
+                   !esSimbolo(programa.charAt(inicio)) ||
+                   esMinuscula(programa.charAt(inicio))){
             estado = 0;
             error = true;
             break;
