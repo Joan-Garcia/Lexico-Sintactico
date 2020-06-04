@@ -122,8 +122,16 @@ public class AnalizadorLexico {
       case 2:                                               // SÍMBOLO
         if(esSimbolo(programa.charAt(inicio))){
           palabra += programa.charAt(inicio);
-          inicio++;
-          return palabra;
+          if(programa.charAt(inicio) == ':' && programa.charAt(inicio + 1) == '='){
+            inicio++;
+            palabra += programa.charAt(inicio);
+            inicio++;
+            return palabra;
+          } else {
+            inicio++;
+            System.out.println("/////////////////return palabra simbolo");
+            return palabra;
+          }
         } else {
           estado = 0;
           break;
@@ -161,10 +169,11 @@ public class AnalizadorLexico {
             añadeFilaASimbolos(palabra, "Identificador");                         //Regístralo.
           
 //          inicio++; // ******* //
-          return palabra;
+          return "id";
         }
       case 5:
         if(esNumero(programa.charAt(inicio))){              // NÚMERO ENTERO
+          System.out.println("ES NUMERO------------");
           palabra += programa.charAt(inicio);             //Guardamos el número
           inicio++;
           estado = 5;
@@ -172,29 +181,25 @@ public class AnalizadorLexico {
         } else if (esPunto(programa.charAt(inicio))){  // sigue un punto.
           palabra += programa.charAt(inicio);          //Guardamos el punto
           if (!esNumero(programa.charAt(inicio + 1))){
-//            System.out.println("Error en: " + palabra);
-//            errores.add(new Nodo(palabra));
-//            palabra = "";
-//            inicio++;
-//            estado = 0;
+            System.out.println("//////////////sigue punto y no hay numero despues");
             inicio++;
             return null;
-          } else {           
+          } else {
+            System.out.println("/////////////////sigue punto y hay numero despues");
             inicio++;
             estado = 6;                                     //Es flotante
             break;
           }
         } else {                                       //Termina el número entero
           if(esMayuscula(programa.charAt(inicio)) || 
-                  !esSimbolo(programa.charAt(inicio)) ||
+                  esSimbolo(programa.charAt(inicio)) ||
                   esMinuscula(programa.charAt(inicio))){
+            System.out.println("///////////termina numero entero, error");
             estado = 0;
             error = true;
             break;
-          }
-          
-//          inicio++;
-          return palabra;
+          } else
+            return "intliteral";
         }
       case 6:                                             // NÚMERO FLOTANTE
         if(esNumero(programa.charAt(inicio))){
@@ -203,6 +208,7 @@ public class AnalizadorLexico {
           estado = 6;
           break;
         } else {                                      //Termina el número float
+          System.out.println("///////////////////////return palabra de numero float");
           return palabra;
         }
     }
@@ -233,7 +239,7 @@ public class AnalizadorLexico {
   
   private boolean esSimbolo(char c){
     return c == ';' || c == '=' || c == '+' || c == '-' || c == '*' || 
-           c == '(' || c == ')'; 
+           c == '(' || c == ')' || c == ':'; 
   }
   
   private boolean esMinuscula(char c){

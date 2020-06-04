@@ -55,7 +55,7 @@ public class LexicoSintactico {
         System.out.println("\t¿x es noterminal? " + this.Contains(x, gramatica.getNoTerminales()));
         if(this.Contains(x, gramatica.getNoTerminales())){
           System.out.println("\t\tSí");
-          System.out.println("\t\t¿Predictiva de x: "+x+", a:"+a+" = "+ Predict(a,x) +" es diferente de 0?");
+          System.out.println("\t\t¿Predictiva de x: "+x+", a: "+a+" = "+ Predict(a,x) +" es diferente de 0?");
           if(Predict(a,x) != 0){
             System.out.println("\t\t\t\tSí");
             System.out.println("\t\t\t\tx será el lado derecho de la producción " + Predict(a,x));
@@ -85,6 +85,7 @@ public class LexicoSintactico {
             System.out.print("\t\t\tPila: ");
             pila.mostrarPila();
             a = analizadorLexico.getToken();
+            x = (String) pila.getTope().getInfo();//-----------------------------------
             System.out.println("\t\t\ta: " + a + "\tSiguiente token del programa");
           } else {
             System.out.println("\t\t\tNo");
@@ -112,7 +113,7 @@ public class LexicoSintactico {
     columna = indexTerminal(terminal);
   
     if(fila != -1 && columna != -1)
-      return predictiva[columna][fila];
+      return predictiva[fila][columna];
     else 
       return 0;
   }

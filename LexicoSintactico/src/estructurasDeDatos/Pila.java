@@ -40,17 +40,21 @@ public class Pila{
     }
     
     public void cicloPush(String[] a){
-      for(String info : a)
-        push(new Nodo(info));
+//      for(String info : a)
+//        push(new Nodo(info));
+      for(int i = a.length-1; i>=0; i--)
+        if(a[i] != " " && a[i].length() > 0)
+          push(new Nodo(a[i]));
     }
     
     public void mostrarPila(){
       if(!esVacia()){
         if(tope == fondo){
-          System.out.println("[" + tope.getInfo() + "]");
+          System.out.println("[" + tope.getInfo() + "]\n");
         } else {
-        for(Nodo temp = tope; temp != fondo; temp = temp.getSiguiente())
+        for(Nodo temp = tope; temp != null; temp = temp.getSiguiente())
           System.out.print("[" + temp.getInfo() + "]");
+          System.out.print("\n");
         }
       }
     }
@@ -61,5 +65,9 @@ public class Pila{
     
     public Nodo getTope(){
       return tope;
+    }
+    
+    public Nodo getFondo(){
+      return fondo;
     }
 }
